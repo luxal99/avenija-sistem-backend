@@ -3,8 +3,9 @@ import {User} from "../entity/User";
 
 export class UserService extends AbstractService<User> {
 
-    async save(entity: User): Promise<void> {
-        await super.save(entity);
+
+    async save(entity: User): Promise<User> {
+        return super.save(entity);
     }
 
     async findByName(name: string): Promise<User> {

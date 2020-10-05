@@ -20,6 +20,12 @@ import {Location} from "./entity/Location";
 import {PartOfCityService} from "./service/PartOfCityService";
 import {PartOfCity} from "./entity/PartOfCity";
 
+import bcrypt = require("bcrypt");
+import {UserService} from "./service/UserService";
+import {User} from "./entity/User";
+import {UserInfoService} from "./service/UserInfoService";
+import {UserInfo} from "./entity/UserInfo";
+
 export class App {
 
 
@@ -200,6 +206,30 @@ export class App {
 
     protected userRoute() {
 
+        this.app.post(`/${this.userRouteName}`, async (req: Request, res: Response) => {
+
+            try {
+                let userInfo = await new UserInfoService().save(new UserInfo(req.body.user_info.full_name, req.body.user_info.email, req.body.user_info.telephone));
+                const userService = await new UserService().save(new User(req.body.username, await bcrypt.hash(req.body.password, 10), req.body.id_role, userInfo));
+                res.sendStatus(200);
+            } catch {
+                res.sendStatus(500);
+            }
+        })
+
+        this.app.post(`/${this.userRouteName}/auth`, async (req: Request, res: Response) => {
+
+            try {
+
+                const user = await new UserService().findByName(req.body.username);
+                const auth = ((user != null && await bcrypt.compare(req.body.password, user.password))
+                    ? res.send({token: user.password, role: user.id_role}) : res.sendStatus(403))
+
+            } catch {
+                res.sendStatus(500);
+            }
+        })
     }
+
 
 }

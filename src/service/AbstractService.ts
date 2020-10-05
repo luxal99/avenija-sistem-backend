@@ -11,8 +11,8 @@ export class AbstractService<T extends BaseEntity> {
         this.manager = getManager();
     }
 
-    async save(entity: T) {
-        await this.manager.save(entity);
+    async save(entity: T): Promise<T> {
+        return await this.manager.save(entity);
     }
 
     async delete(entity: T) {

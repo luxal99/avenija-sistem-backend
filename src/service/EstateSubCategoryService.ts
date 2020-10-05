@@ -4,7 +4,8 @@ import {EstateSubCategory} from "../entity/EstateSubCategory";
 
 export class EstateSubCategoryService extends AbstractService<EstateSubCategory> {
 
-    async save(entity: EstateSubCategory): Promise<void> {
-        await super.save(entity);
+
+    async save(entity: EstateSubCategory): Promise<EstateSubCategory> {
+        return super.save(entity);
     }
 }
