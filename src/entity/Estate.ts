@@ -1,4 +1,4 @@
-import {Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {BaseEntity, Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {Image} from "./Image";
 import {EstateSubCategory} from "./EstateSubCategory";
 import {TransactionType} from "./TransactionType";
@@ -8,7 +8,7 @@ import {Accessories} from "./Accessories";
 
 
 @Entity()
-export class Estate {
+export class Estate extends BaseEntity{
 
     @PrimaryGeneratedColumn()
     id: number;

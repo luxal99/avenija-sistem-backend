@@ -1,0 +1,9 @@
+import {AbstractService} from "./AbstractService";
+import {PartOfCity} from "../entity/PartOfCity";
+
+export class PartOfCityService extends AbstractService<PartOfCity> {
+
+    async save(entity: PartOfCity): Promise<void> {
+        await super.save(entity);
+    }
+}
