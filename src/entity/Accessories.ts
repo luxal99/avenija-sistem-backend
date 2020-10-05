@@ -11,4 +11,10 @@ export class Accessories extends BaseEntity {
 
     @ManyToMany(type => Estate, estate => estate.listOfAccessories)
     listOfEstates: Estate[];
+
+
+    constructor(title: string) {
+        super();
+        this.title = title;
+    }
 }

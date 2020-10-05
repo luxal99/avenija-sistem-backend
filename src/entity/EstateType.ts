@@ -10,4 +10,8 @@ export class EstateType extends BaseEntity {
     title: string;
 
 
+    constructor(title?: string) {
+        super();
+        this.title = title;
+    }
 }

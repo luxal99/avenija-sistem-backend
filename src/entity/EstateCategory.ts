@@ -13,4 +13,10 @@ export class EstateCategory extends BaseEntity {
 
     @OneToMany(type => EstateSubCategory, listOfEstateSubCategories => listOfEstateSubCategories.id_estate_category)
     listOfEstateSubCategories: EstateSubCategory[]
+
+
+    constructor(title?: string) {
+        super();
+        this.title = title;
+    }
 }

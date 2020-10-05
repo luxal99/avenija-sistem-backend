@@ -13,4 +13,11 @@ export class Location extends BaseEntity {
 
     @ManyToOne(type => PartOfCity,id=>id.listOfLocations)
     id_part_of_city:PartOfCity
+
+
+    constructor(address?: string, id_part_of_city?: PartOfCity) {
+        super();
+        this.address = address;
+        this.id_part_of_city = id_part_of_city;
+    }
 }

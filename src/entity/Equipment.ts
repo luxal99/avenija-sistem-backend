@@ -12,4 +12,10 @@ export class Equipment extends BaseEntity {
 
     @OneToMany(type => Estate, listOfEstates => listOfEstates.id_equipment)
     listOfEstates: Estate[]
+
+
+    constructor(title?: string) {
+        super();
+        this.title = title;
+    }
 }

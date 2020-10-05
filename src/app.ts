@@ -1,6 +1,24 @@
-import {Application} from "express";
+import {Application, Request, Response} from "express";
 import express = require("express");
 import bodyParser = require("body-parser");
+import {AccessoriesService} from "./service/AccessoriesService";
+import {Accessories} from "./entity/Accessories";
+import {CityService} from "./service/CityService";
+import {City} from "./entity/City";
+import {EquipmentService} from "./service/EquipmentService";
+import {Equipment} from "./entity/Equipment";
+import {EstateCategoryService} from "./service/EstateCategoryService";
+import {EstateCategory} from "./entity/EstateCategory";
+import {EstateSubCategoryService} from "./service/EstateSubCategoryService";
+import {EstateSubCategory} from "./entity/EstateSubCategory";
+import {EstateType} from "./entity/EstateType";
+import {EstateTypeService} from "./service/EstateTypeService";
+import {HeatingService} from "./service/HeatingService";
+import {Heating} from "./entity/Heating";
+import {LocationService} from "./service/LocationService";
+import {Location} from "./entity/Location";
+import {PartOfCityService} from "./service/PartOfCityService";
+import {PartOfCity} from "./entity/PartOfCity";
 
 export class App {
 
@@ -63,14 +81,39 @@ export class App {
 
     protected accessoriesRoute() {
 
+        this.app.post(`/${this.accessoriesRouteName}`, async (req: Request, res: Response) => {
+            try {
+                await new AccessoriesService().save(new Accessories(req.body.title)).then(() => {
+                    res.sendStatus(200)
+                })
+            } catch (e) {
+
+            }
+        })
     }
 
     protected cityRoute() {
+        this.app.post(`/${this.cityRouteName}`, async (req: Request, res: Response) => {
+            try {
+                await new CityService().save(new City(req.body.title)).then(() => {
+                    res.sendStatus(200)
+                })
+            } catch (e) {
 
+            }
+        })
     }
 
     protected equipmentRoute() {
+        this.app.post(`/${this.equipmentRouteName}`, async (req: Request, res: Response) => {
+            try {
+                await new EquipmentService().save(new Equipment(req.body.title)).then(() => {
+                    res.sendStatus(200)
+                })
+            } catch (e) {
 
+            }
+        })
     }
 
     protected estateRoute() {
@@ -78,28 +121,76 @@ export class App {
     }
 
     protected estateCategoryRoute() {
+        this.app.post(`/${this.estateCategoryRouteName}`, async (req: Request, res: Response) => {
+            try {
+                await new EstateCategoryService().save(new EstateCategory(req.body.title)).then(() => {
+                    res.sendStatus(200)
+                })
+            } catch (e) {
 
+            }
+        })
     }
 
     protected estateSubCategoryRoute() {
+        this.app.post(`/${this.estateSubCategoryRouteName}`, async (req: Request, res: Response) => {
+            try {
+                await new EstateSubCategoryService().save(new EstateSubCategory(req.body.title, req.body.id_category)).then(() => {
+                    res.sendStatus(200)
+                })
+            } catch (e) {
 
+            }
+        })
     }
 
     protected estateTypeRoute() {
+        this.app.post(`/${this.estateTypeRouteName}`, async (req: Request, res: Response) => {
+            try {
+                await new EstateTypeService().save(new EstateType(req.body.title)).then(() => {
+                    res.sendStatus(200)
+                })
+            } catch (e) {
 
+            }
+        })
     }
 
     protected heatingRoute() {
+        this.app.post(`/${this.heatingRouteName}`, async (req: Request, res: Response) => {
+            try {
+                await new HeatingService().save(new Heating(req.body.title)).then(() => {
+                    res.sendStatus(200)
+                })
+            } catch (e) {
 
+            }
+        })
     }
 
 
     protected locationRoute() {
+        this.app.post(`/${this.locationRouteName}`, async (req: Request, res: Response) => {
+            try {
+                await new LocationService().save(new Location(req.body.address, req.body.id_part_of_city)).then(() => {
+                    res.sendStatus(200)
+                })
+            } catch (e) {
 
+            }
+        })
     }
 
     protected partOfCityRoute() {
+        this.app.post(`/${this.partOfCityRouteName}`, async (req: Request, res: Response) => {
+            try {
+                await new PartOfCityService().save(new PartOfCity(req.body.title, req.body.id_city)).then(() => {
+                    res.sendStatus(200)
+                })
+            } catch (e) {
 
+            }
+        })
     }
 
 

@@ -12,4 +12,10 @@ export class Heating extends BaseEntity {
 
     @OneToMany(type => Estate,listOfEstates=>listOfEstates.id_heating)
     listOfEstates:Estate[];
+
+
+    constructor(title: string) {
+        super();
+        this.title = title;
+    }
 }
