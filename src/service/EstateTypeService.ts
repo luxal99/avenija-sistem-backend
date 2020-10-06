@@ -9,6 +9,6 @@ export class EstateTypeService extends AbstractService<EstateType> {
     }
 
     async getAll(): Promise<EstateType[]> {
-        return Promise.resolve([]);
+        return EstateType.find()
     }
 }

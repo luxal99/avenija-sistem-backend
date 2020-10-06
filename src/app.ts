@@ -81,7 +81,6 @@ export class App {
         this.heatingRouteName = "heating";
         this.locationRouteName = "location";
         this.partOfCityRouteName = "partOfCity";
-        this.transactionTypeRouteName = "transaction";
         this.userRouteName = "user"
 
     }
@@ -93,6 +92,14 @@ export class App {
                 await new AccessoriesService().save(new Accessories(req.body.title)).then(() => {
                     res.sendStatus(200)
                 })
+            } catch (e) {
+
+            }
+        })
+
+        this.app.get(`/${this.accessoriesRouteName}`, async (req: Request, res: Response) => {
+            try {
+                res.send(await new AccessoriesService().getAll())
             } catch (e) {
 
             }
@@ -129,6 +136,15 @@ export class App {
 
             }
         })
+
+
+        this.app.get(`/${this.equipmentRouteName}`, async (req: Request, res: Response) => {
+            try {
+                res.send(await new EquipmentService().getAll())
+            } catch (e) {
+
+            }
+        })
     }
 
     protected estateRoute() {
@@ -145,14 +161,31 @@ export class App {
 
             }
         })
+
+
+        this.app.get(`/${this.estateCategoryRouteName}`, async (req: Request, res: Response) => {
+            try {
+                res.send(await new EstateCategoryService().getAll())
+            } catch (e) {
+                res.sendStatus(500)
+            }
+        })
     }
 
     protected estateSubCategoryRoute() {
         this.app.post(`/${this.estateSubCategoryRouteName}`, async (req: Request, res: Response) => {
             try {
-                await new EstateSubCategoryService().save(new EstateSubCategory(req.body.title, req.body.id_category)).then(() => {
+                await new EstateSubCategoryService().save(new EstateSubCategory(req.body.title, req.body.id_estate_category)).then(() => {
                     res.sendStatus(200)
                 })
+            } catch (e) {
+
+            }
+        })
+
+        this.app.get(`/${this.estateSubCategoryRouteName}`, async (req: Request, res: Response) => {
+            try {
+                res.send(await new EstateSubCategoryService().getAll())
             } catch (e) {
 
             }
@@ -166,9 +199,17 @@ export class App {
                     res.sendStatus(200)
                 })
             } catch (e) {
-
+                res.sendStatus(500)
             }
         })
+        this.app.get(`/${this.estateTypeRouteName}`, async (req: Request, res: Response) => {
+            try {
+                res.send(await new EstateTypeService().getAll())
+            } catch (e) {
+                res.sendStatus(500)
+            }
+        })
+
     }
 
     protected heatingRoute() {
@@ -177,6 +218,15 @@ export class App {
                 await new HeatingService().save(new Heating(req.body.title)).then(() => {
                     res.sendStatus(200)
                 })
+            } catch (e) {
+
+            }
+        })
+
+
+        this.app.get(`/${this.heatingRouteName}`, async (req: Request, res: Response) => {
+            try {
+                res.send(await new HeatingService().getAll())
             } catch (e) {
 
             }

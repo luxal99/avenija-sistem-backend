@@ -10,6 +10,6 @@ export class EquipmentService extends AbstractService<Equipment> {
     }
 
     async getAll(): Promise<Equipment[]> {
-        return Promise.resolve([]);
+        return await Equipment.find()
     }
 }

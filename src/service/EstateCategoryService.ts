@@ -9,6 +9,6 @@ export  class EstateCategoryService extends AbstractService<EstateCategory> {
     }
 
     async getAll(): Promise<EstateCategory[]> {
-        return Promise.resolve([]);
+        return await EstateCategory.find({relations:['listOfEstateSubCategories']})
     }
 }
