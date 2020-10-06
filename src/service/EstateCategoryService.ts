@@ -7,4 +7,8 @@ export  class EstateCategoryService extends AbstractService<EstateCategory> {
     async save(entity: EstateCategory): Promise<EstateCategory> {
         return super.save(entity);
     }
+
+    async getAll(): Promise<EstateCategory[]> {
+        return Promise.resolve([]);
+    }
 }

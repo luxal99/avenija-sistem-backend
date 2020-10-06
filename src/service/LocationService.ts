@@ -7,4 +7,8 @@ export class LocationService extends AbstractService<Location> {
     async save(entity: Location): Promise<Location> {
         return super.save(entity);
     }
+
+    async getAll(): Promise<Location[]> {
+        return Promise.resolve([]);
+    }
 }

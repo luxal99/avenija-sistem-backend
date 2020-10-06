@@ -7,4 +7,8 @@ export class TransactionTypeService extends AbstractService<TransactionType> {
     async save(entity: TransactionType): Promise<TransactionType> {
         return super.save(entity);
     }
+
+    async getAll(): Promise<TransactionType[]> {
+        return Promise.resolve([]);
+    }
 }

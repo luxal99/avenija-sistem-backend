@@ -8,4 +8,8 @@ export class EquipmentService extends AbstractService<Equipment> {
     async save(entity: Accessories): Promise<Accessories> {
         return super.save(entity);
     }
+
+    async getAll(): Promise<Equipment[]> {
+        return Promise.resolve([]);
+    }
 }

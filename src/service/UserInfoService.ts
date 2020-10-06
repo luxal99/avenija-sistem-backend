@@ -8,4 +8,8 @@ export class UserInfoService extends AbstractService<UserInfo> {
     async save(entity: UserInfo): Promise<UserInfo> {
         return super.save(entity);
     }
+
+    async getAll(): Promise<UserInfo[]> {
+        return Promise.resolve([]);
+    }
 }

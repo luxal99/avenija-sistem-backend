@@ -71,7 +71,8 @@ export class App {
         this.app.use(bodyParser.json());
 
         this.accessoriesRouteName = "accessories";
-        this.transactionTypeRouteName = "city"
+        this.transactionTypeRouteName = "transaction"
+        this.cityRouteName = "city"
         this.equipmentRouteName = "equipment";
         this.estateRouteName = "estate";
         this.estateCategoryRouteName = "estateCategory";
@@ -104,6 +105,14 @@ export class App {
                 await new CityService().save(new City(req.body.title)).then(() => {
                     res.sendStatus(200)
                 })
+            } catch (e) {
+                res.sendStatus(500)
+            }
+        })
+
+        this.app.get(`/${this.cityRouteName}`, async (req: Request, res: Response) => {
+            try {
+                res.send(await new CityService().getAll())
             } catch (e) {
 
             }
@@ -190,9 +199,18 @@ export class App {
     protected partOfCityRoute() {
         this.app.post(`/${this.partOfCityRouteName}`, async (req: Request, res: Response) => {
             try {
+                console.log(req.body)
                 await new PartOfCityService().save(new PartOfCity(req.body.title, req.body.id_city)).then(() => {
                     res.sendStatus(200)
                 })
+            } catch (e) {
+
+            }
+        })
+
+        this.app.get(`/${this.partOfCityRouteName}`, async (req: Request, res: Response) => {
+            try {
+                res.send(await new PartOfCityService().getAll());
             } catch (e) {
 
             }

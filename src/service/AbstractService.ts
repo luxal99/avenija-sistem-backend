@@ -1,9 +1,9 @@
 import {BaseEntity, EntityManager, getManager} from "typeorm";
 
 
-export class AbstractService<T extends BaseEntity> {
+export abstract class AbstractService<T extends BaseEntity> {
 
-    T
+
     protected manager: EntityManager;
 
 
@@ -18,6 +18,9 @@ export class AbstractService<T extends BaseEntity> {
     async delete(entity: T) {
         await this.manager.remove(entity);
     }
+
+
+    abstract async getAll():Promise<T[]>
 
 
 }

@@ -12,4 +12,8 @@ export class UserService extends AbstractService<User> {
         return await this.manager.findOne(User, {username: name});
     }
 
+    async getAll(): Promise<User[]> {
+        return Promise.resolve([]);
+    }
+
 }
