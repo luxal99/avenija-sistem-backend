@@ -277,7 +277,7 @@ export class App {
         this.app.post(`/${this.userRouteName}`, async (req: Request, res: Response) => {
 
             try {
-                let userInfo = await new UserInfoService().save(new UserInfo(req.body.user_info.full_name, req.body.user_info.email, req.body.user_info.telephone));
+                let userInfo = await new UserInfoService().save(new UserInfo(req.body.id_user_info.full_name, req.body.id_user_info.email, req.body.id_user_info.telephone));
                 const userService = await new UserService().save(new User(req.body.username, await bcrypt.hash(req.body.password, 10), req.body.id_role, userInfo));
                 res.sendStatus(200);
             } catch {
