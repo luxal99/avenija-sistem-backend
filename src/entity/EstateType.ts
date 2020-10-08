@@ -1,4 +1,5 @@
-import {BaseEntity, Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {Estate} from "./Estate";
 
 @Entity()
 export class EstateType extends BaseEntity {
@@ -9,6 +10,8 @@ export class EstateType extends BaseEntity {
     @Column()
     title: string;
 
+    @OneToMany(type => Estate, listOfEstates => listOfEstates.id_estate_type)
+    listOfEstates: Estate[];
 
     constructor(title?: string) {
         super();

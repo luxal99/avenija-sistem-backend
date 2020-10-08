@@ -9,6 +9,6 @@ export class TransactionTypeService extends AbstractService<TransactionType> {
     }
 
     async getAll(): Promise<TransactionType[]> {
-        return Promise.resolve([]);
+        return await TransactionType.find();
     }
 }

@@ -9,11 +9,11 @@ export class UserService extends AbstractService<User> {
     }
 
     async findByName(name: string): Promise<User> {
-        return await this.manager.findOne(User, {username: name});
+        return await this.manager.findOne(User, {username: name},{relations:['id_role','id_user_info']});
     }
 
     async getAll(): Promise<User[]> {
-        return Promise.resolve([]);
+        return await User.find({relations:['id_role','id_user_info']});
     }
 
 }

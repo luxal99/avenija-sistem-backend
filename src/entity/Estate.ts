@@ -5,6 +5,7 @@ import {TransactionType} from "./TransactionType";
 import {Heating} from "./Heating";
 import {Equipment} from "./Equipment";
 import {Accessories} from "./Accessories";
+import {EstateType} from "./EstateType";
 
 
 @Entity()
@@ -59,6 +60,9 @@ export class Estate extends BaseEntity{
 
     @ManyToOne(type => Heating, id => id.listOfEstates)
     id_heating: Heating
+
+    @ManyToOne(type => EstateType, id => id.listOfEstates)
+    id_estate_type: EstateType
 
     @ManyToOne(type => Equipment, id => id.listOfEstates)
     id_equipment: Equipment

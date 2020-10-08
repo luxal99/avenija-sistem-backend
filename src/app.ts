@@ -25,6 +25,11 @@ import {UserService} from "./service/UserService";
 import {User} from "./entity/User";
 import {UserInfoService} from "./service/UserInfoService";
 import {UserInfo} from "./entity/UserInfo";
+import {TransactionTypeService} from "./service/TransactionTypeService";
+
+const cors = require('cors');
+const fileUpload = require('express-fileupload');
+const fs = require('fs');
 
 export class App {
 
@@ -63,7 +68,10 @@ export class App {
         this.locationRoute();
         this.partOfCityRoute();
         this.transactionTypeRoute();
-        this.userRoute()
+        this.userRoute();
+
+        this.app.use(cors());
+        this.app.use(bodyParser.json({limit: '50mb', type: 'application/json'}));
     }
 
 
@@ -148,7 +156,13 @@ export class App {
     }
 
     protected estateRoute() {
-
+        this.app.post(`/${this.estateRouteName}`, async (req: Request, res: Response) => {
+            try {
+                console.log(req.files)
+            } catch (e) {
+                res.sendStatus(500)
+            }
+        })
     }
 
     protected estateCategoryRoute() {
@@ -269,7 +283,13 @@ export class App {
 
 
     protected transactionTypeRoute() {
+        this.app.get(`/${this.transactionTypeRouteName}`, async (req: Request, res: Response) => {
+            try {
+                res.send(await new TransactionTypeService().getAll())
+            } catch (e) {
 
+            }
+        })
     }
 
     protected userRoute() {
@@ -290,6 +310,7 @@ export class App {
             try {
 
                 const user = await new UserService().findByName(req.body.username);
+                console.log(user)
                 const auth = ((user != null && await bcrypt.compare(req.body.password, user.password))
                     ? res.send({token: user.password, role: user.id_role}) : res.sendStatus(403))
 
