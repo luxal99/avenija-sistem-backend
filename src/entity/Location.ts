@@ -1,5 +1,6 @@
-import {BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {PartOfCity} from "./PartOfCity";
+import {Estate} from "./Estate";
 
 @Entity()
 export class Location extends BaseEntity {
@@ -12,7 +13,10 @@ export class Location extends BaseEntity {
     address: string;
 
     @ManyToOne(type => PartOfCity,id=>id.listOfLocations)
-    id_part_of_city:PartOfCity
+    id_part_of_city:PartOfCity;
+
+    @OneToMany(type => Estate, listOfEstates => listOfEstates.id_location)
+    listOfEstates: Estate[]
 
 
     constructor(address?: string, id_part_of_city?: PartOfCity) {

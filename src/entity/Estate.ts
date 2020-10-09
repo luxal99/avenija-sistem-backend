@@ -6,6 +6,7 @@ import {Heating} from "./Heating";
 import {Equipment} from "./Equipment";
 import {Accessories} from "./Accessories";
 import {EstateType} from "./EstateType";
+import {Location} from "./Location";
 
 
 @Entity()
@@ -67,6 +68,8 @@ export class Estate extends BaseEntity{
     @ManyToOne(type => Equipment, id => id.listOfEstates)
     id_equipment: Equipment
 
+    @ManyToOne(type => Location,id=>id.listOfEstates)
+    id_location:Location
 
     @ManyToMany(type => Accessories, estate => estate.listOfEstates)
     listOfAccessories: Accessories[];
