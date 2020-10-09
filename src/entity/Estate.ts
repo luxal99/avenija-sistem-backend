@@ -29,7 +29,7 @@ export class Estate extends BaseEntity {
     title: string;
 
 
-    @Column()
+    @Column({length:10240})
     description: string
 
 
