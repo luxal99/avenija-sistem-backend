@@ -1,4 +1,14 @@
-import {BaseEntity, Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {
+    BaseEntity,
+    Column,
+    Entity,
+    JoinColumn, JoinTable,
+    ManyToMany,
+    ManyToOne,
+    OneToMany,
+    OneToOne,
+    PrimaryGeneratedColumn
+} from "typeorm";
 import {Image} from "./Image";
 import {EstateSubCategory} from "./EstateSubCategory";
 import {TransactionType} from "./TransactionType";
@@ -10,7 +20,7 @@ import {Location} from "./Location";
 
 
 @Entity()
-export class Estate extends BaseEntity{
+export class Estate extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number;
@@ -32,7 +42,7 @@ export class Estate extends BaseEntity{
 
 
     @Column()
-    num_of_bathrooms:number
+    num_of_bathrooms: number
 
 
     @Column()
@@ -68,10 +78,16 @@ export class Estate extends BaseEntity{
     @ManyToOne(type => Equipment, id => id.listOfEstates)
     id_equipment: Equipment
 
-    @ManyToOne(type => Location,id=>id.listOfEstates)
-    id_location:Location
+    @OneToOne(type => Location)
+    @JoinColumn()
+    id_location: Location
 
     @ManyToMany(type => Accessories, estate => estate.listOfEstates)
+    @JoinTable()
     listOfAccessories: Accessories[];
 
+
+    constructor() {
+        super();
+    }
 }

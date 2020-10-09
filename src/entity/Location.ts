@@ -15,9 +15,6 @@ export class Location extends BaseEntity {
     @ManyToOne(type => PartOfCity,id=>id.listOfLocations)
     id_part_of_city:PartOfCity;
 
-    @OneToMany(type => Estate, listOfEstates => listOfEstates.id_location)
-    listOfEstates: Estate[]
-
 
     constructor(address?: string, id_part_of_city?: PartOfCity) {
         super();
