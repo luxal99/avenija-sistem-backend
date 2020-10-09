@@ -104,7 +104,7 @@ export class App {
         this.app.post(`/${this.accessoriesRouteName}`, async (req: Request, res: Response) => {
             try {
                 await new AccessoriesService().save(new Accessories(req.body.title)).then(() => {
-                     res.send({status:200})
+                    res.send({status: 200})
                 })
             } catch (e) {
 
@@ -124,7 +124,7 @@ export class App {
         this.app.post(`/${this.cityRouteName}`, async (req: Request, res: Response) => {
             try {
                 await new CityService().save(new City(req.body.title)).then(() => {
-                     res.send({status:200})
+                    res.send({status: 200})
                 })
             } catch (e) {
                 res.sendStatus(500)
@@ -144,7 +144,7 @@ export class App {
         this.app.post(`/${this.equipmentRouteName}`, async (req: Request, res: Response) => {
             try {
                 await new EquipmentService().save(new Equipment(req.body.title)).then(() => {
-                     res.send({status:200})
+                    res.send({status: 200})
                 })
             } catch (e) {
 
@@ -186,13 +186,24 @@ export class App {
             let listOfImages: Image[] = req.body.listOfImages
 
 
+            console.log(req.body)
+
             await new EstateService().save(estate).then(() => {
                 listOfImages.forEach(async image => {
-                    await new ImageService().save(new Image(image.url, estate)).then(()=>{
-                        res.send({status:200})
+                    await new ImageService().save(new Image(image.url, estate)).then(() => {
+
                     })
                 })
+                res.send({status: 200})
             });
+        })
+
+        this.app.get(`/${this.estateRouteName}`, async (req: Request, res: Response) => {
+            try {
+                res.send(await new EstateService().getAll())
+            } catch (e) {
+
+            }
         })
     }
 
@@ -200,7 +211,7 @@ export class App {
         this.app.post(`/${this.estateCategoryRouteName}`, async (req: Request, res: Response) => {
             try {
                 await new EstateCategoryService().save(new EstateCategory(req.body.title)).then(() => {
-                     res.send({status:200})
+                    res.send({status: 200})
                 })
             } catch (e) {
 
@@ -221,7 +232,7 @@ export class App {
         this.app.post(`/${this.estateSubCategoryRouteName}`, async (req: Request, res: Response) => {
             try {
                 await new EstateSubCategoryService().save(new EstateSubCategory(req.body.title, req.body.id_estate_category)).then(() => {
-                     res.send({status:200})
+                    res.send({status: 200})
                 })
             } catch (e) {
 
@@ -241,7 +252,7 @@ export class App {
         this.app.post(`/${this.estateTypeRouteName}`, async (req: Request, res: Response) => {
             try {
                 await new EstateTypeService().save(new EstateType(req.body.title)).then(() => {
-                     res.send({status:200})
+                    res.send({status: 200})
                 })
             } catch (e) {
                 res.sendStatus(500)
@@ -261,7 +272,7 @@ export class App {
         this.app.post(`/${this.heatingRouteName}`, async (req: Request, res: Response) => {
             try {
                 await new HeatingService().save(new Heating(req.body.title)).then(() => {
-                     res.send({status:200})
+                    res.send({status: 200})
                 })
             } catch (e) {
 
@@ -294,7 +305,7 @@ export class App {
             try {
                 console.log(req.body)
                 await new PartOfCityService().save(new PartOfCity(req.body.title, req.body.id_city)).then(() => {
-                     res.send({status:200})
+                    res.send({status: 200})
                 })
             } catch (e) {
 
@@ -328,7 +339,7 @@ export class App {
             try {
                 let userInfo = await new UserInfoService().save(new UserInfo(req.body.id_user_info.full_name, req.body.id_user_info.email, req.body.id_user_info.telephone));
                 const userService = await new UserService().save(new User(req.body.username, await bcrypt.hash(req.body.password, 10), req.body.id_role, userInfo));
-                 res.send({status:200});
+                res.send({status: 200});
             } catch {
                 res.sendStatus(500);
             }
