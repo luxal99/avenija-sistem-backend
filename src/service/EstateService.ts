@@ -19,7 +19,7 @@ export class EstateService extends AbstractService<Estate> {
     async getAll(): Promise<Estate[]> {
         return await Estate.find({
             relations: [
-                'listOfImages', 'id_estate_sub_category', 'id_transaction_type',
+                'listOfImages', 'id_estate_sub_category','id_estate_sub_category.id_estate_category', 'id_transaction_type',
                 'id_heating', 'id_estate_type', 'id_equipment', 'id_location',
                 'id_location.id_part_of_city', 'id_location.id_part_of_city.id_city', 'listOfAccessories'
             ]

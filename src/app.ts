@@ -203,13 +203,14 @@ export class App {
             }
         })
 
-        this.app.delete(`/${this.estateRouteName}`, async (req: Request, res: Response) => {
+        this.app.delete(`/${this.estateRouteName}/:id`, async (req: Request, res: Response) => {
+            console.log(req.body)
             try {
                 const estateService = new EstateService();
                 const locationService = new LocationService();
                 const imageService = new ImageService();
 
-                const estateById = await estateService.findById(Number.parseInt(req.body.id));
+                const estateById = await estateService.findById(Number.parseInt(req.params.id));
 
                 for (const image of estateById.listOfImages) {
                     await imageService.delete(image)
