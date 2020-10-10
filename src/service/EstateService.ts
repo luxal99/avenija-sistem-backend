@@ -8,12 +8,20 @@ export class EstateService extends AbstractService<Estate> {
         return super.save(entity);
     }
 
+    async findById(id: number): Promise<Estate> {
+        return await Estate.findOne({id: id},{relations:['id_location','listOfImages']})
+    }
+
+    async delete(entity: Estate): Promise<void> {
+        await super.delete(entity);
+    }
+
     async getAll(): Promise<Estate[]> {
         return await Estate.find({
             relations: [
                 'listOfImages', 'id_estate_sub_category', 'id_transaction_type',
                 'id_heating', 'id_estate_type', 'id_equipment', 'id_location',
-                'id_location.id_part_of_city','id_location.id_part_of_city.id_city','listOfAccessories'
+                'id_location.id_part_of_city', 'id_location.id_part_of_city.id_city', 'listOfAccessories'
             ]
         });
     }

@@ -185,12 +185,9 @@ export class App {
 
             let listOfImages: Image[] = req.body.listOfImages
 
-
-            console.log(req.body)
-
             await new EstateService().save(estate).then(() => {
                 listOfImages.forEach(async image => {
-                    await new ImageService().save(new Image(image.url, estate)).then(() => {
+                    await new ImageService().save(new Image(image.title, image.url, estate)).then(() => {
 
                     })
                 })
@@ -205,6 +202,28 @@ export class App {
 
             }
         })
+
+        this.app.delete(`/${this.estateRouteName}`, async (req: Request, res: Response) => {
+            try {
+                const estateService = new EstateService();
+                const locationService = new LocationService();
+                const imageService = new ImageService();
+
+                const estateById = await estateService.findById(Number.parseInt(req.body.id));
+
+                for (const image of estateById.listOfImages) {
+                    await imageService.delete(image)
+                }
+
+                await estateService.delete(estateById).then(() => {
+                    res.sendStatus(200)
+                })
+            } catch (e) {
+                res.sendStatus(500)
+            }
+        })
+
+
     }
 
     protected estateCategoryRoute() {
@@ -303,7 +322,6 @@ export class App {
     protected partOfCityRoute() {
         this.app.post(`/${this.partOfCityRouteName}`, async (req: Request, res: Response) => {
             try {
-                console.log(req.body)
                 await new PartOfCityService().save(new PartOfCity(req.body.title, req.body.id_city)).then(() => {
                     res.send({status: 200})
                 })
@@ -350,7 +368,6 @@ export class App {
             try {
 
                 const user = await new UserService().findByName(req.body.username);
-                console.log(user)
                 const auth = ((user != null && await bcrypt.compare(req.body.password, user.password))
                     ? res.send({token: user.password, role: user.id_role}) : res.sendStatus(403))
 
