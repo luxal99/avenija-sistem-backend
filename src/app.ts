@@ -203,10 +203,19 @@ export class App {
             }
         })
 
-        this.app.get(`/${this.estateRouteName}/:id`,async (req:Request,res:Response)=>{
-            try{
+        this.app.put(`/${this.estateRouteName}`, async (req: Request, res: Response) => {
+            try {
+                await new EstateService().update(req.body);
+                res.sendStatus(200);
+            } catch (e) {
+                res.send(e)
+            }
+        })
+
+        this.app.get(`/${this.estateRouteName}/:id`, async (req: Request, res: Response) => {
+            try {
                 res.send(await new EstateService().findById(Number.parseInt(req.params.id)))
-            }catch (e){
+            } catch (e) {
                 res.sendStatus(500)
             }
         })
