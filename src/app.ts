@@ -203,6 +203,14 @@ export class App {
             }
         })
 
+        this.app.get(`/${this.estateRouteName}/:id`,async (req:Request,res:Response)=>{
+            try{
+                res.send(await new EstateService().findById(Number.parseInt(req.params.id)))
+            }catch (e){
+                res.sendStatus(500)
+            }
+        })
+
         this.app.delete(`/${this.estateRouteName}/:id`, async (req: Request, res: Response) => {
             console.log(req.body)
             try {
