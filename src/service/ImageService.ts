@@ -8,7 +8,12 @@ export class ImageService extends AbstractService<Image> {
         return super.save(entity);
     }
 
+
+    async delete(entity: Image): Promise<void> {
+        await super.delete(entity);
+    }
+
     async getAll(): Promise<Image[]> {
-        return Promise.resolve([]);
+        return await Image.find({relations:['id_estate']});
     }
 }

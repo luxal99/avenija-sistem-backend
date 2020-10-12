@@ -208,7 +208,7 @@ export class App {
                 await new EstateService().update(req.body);
                 res.sendStatus(200);
             } catch (e) {
-                res.send(e)
+                res.send(500)
             }
         })
 
