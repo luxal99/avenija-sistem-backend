@@ -5,7 +5,7 @@ export abstract class AbstractService<T extends BaseEntity> {
 
 
     protected manager: EntityManager;
-    protected entity:T;
+    protected entity: T;
 
     constructor() {
         this.manager = getManager();
@@ -15,14 +15,14 @@ export abstract class AbstractService<T extends BaseEntity> {
         return await this.manager.save(entity);
     }
 
-
+    abstract async update(entity: T): Promise<void>
 
     async delete(entity: T) {
         await this.manager.remove(entity);
     }
 
 
-    abstract async getAll():Promise<T[]>
+    abstract async getAll(): Promise<T[]>
 
 
 }

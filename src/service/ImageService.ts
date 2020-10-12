@@ -16,4 +16,8 @@ export class ImageService extends AbstractService<Image> {
     async getAll(): Promise<Image[]> {
         return await Image.find({relations:['id_estate']});
     }
+
+    async update(entity: Image): Promise<void> {
+        return Promise.resolve(undefined);
+    }
 }

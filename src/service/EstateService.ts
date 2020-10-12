@@ -24,7 +24,7 @@ export class EstateService extends AbstractService<Estate> {
         await super.delete(entity);
     }
 
-    async update(entity: Estate) {
+    async update(entity: Estate): Promise<void> {
         try {
 
             const estate = await this.findById(entity.id);

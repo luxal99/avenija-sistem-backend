@@ -118,6 +118,16 @@ export class App {
 
             }
         })
+
+        this.app.put(`/${this.accessoriesRouteName}`, async (req: Request, res: Response) => {
+            try {
+                await new AccessoriesService().update(req.body).then(() => {
+                    res.sendStatus(200);
+                })
+            } catch (e) {
+                res.sendStatus(500);
+            }
+        })
     }
 
     protected cityRoute() {
@@ -136,6 +146,16 @@ export class App {
                 res.send(await new CityService().getAll())
             } catch (e) {
 
+            }
+        })
+
+        this.app.put(`/${this.cityRouteName}`, async (req: Request, res: Response) => {
+            try {
+                await new CityService().update(req.body).then(() => {
+                    res.sendStatus(200);
+                })
+            } catch (e) {
+                res.sendStatus(500);
             }
         })
     }
@@ -157,6 +177,16 @@ export class App {
                 res.send(await new EquipmentService().getAll())
             } catch (e) {
 
+            }
+        })
+
+        this.app.put(`/${this.equipmentRouteName}`, async (req: Request, res: Response) => {
+            try {
+                await new EquipmentService().update(req.body).then(() => {
+                    res.sendStatus(200);
+                })
+            } catch (e) {
+                res.sendStatus(500);
             }
         })
     }
@@ -263,6 +293,16 @@ export class App {
                 res.sendStatus(500)
             }
         })
+
+        this.app.put(`/${this.estateCategoryRouteName}`, async (req: Request, res: Response) => {
+            try {
+                await new EstateCategoryService().update(req.body).then(() => {
+                    res.sendStatus(200);
+                })
+            } catch (e) {
+                res.sendStatus(500);
+            }
+        })
     }
 
     protected estateSubCategoryRoute() {
@@ -281,6 +321,16 @@ export class App {
                 res.send(await new EstateSubCategoryService().getAll())
             } catch (e) {
 
+            }
+        })
+
+        this.app.put(`/${this.estateSubCategoryRouteName}`, async (req: Request, res: Response) => {
+            try {
+                await new EstateSubCategoryService().update(req.body).then(() => {
+                    res.sendStatus(200);
+                })
+            } catch (e) {
+                res.sendStatus(500);
             }
         })
     }
@@ -303,6 +353,16 @@ export class App {
             }
         })
 
+        this.app.put(`/${this.estateTypeRouteName}`, async (req: Request, res: Response) => {
+            try {
+                await new EstateTypeService().update(req.body).then(() => {
+                    res.sendStatus(200);
+                })
+            } catch (e) {
+                res.sendStatus(500);
+            }
+        })
+
     }
 
     protected heatingRoute() {
@@ -322,6 +382,16 @@ export class App {
                 res.send(await new HeatingService().getAll())
             } catch (e) {
 
+            }
+        })
+
+        this.app.put(`/${this.heatingRouteName}`, async (req: Request, res: Response) => {
+            try {
+                await new HeatingService().update(req.body).then(() => {
+                    res.sendStatus(200);
+                })
+            } catch (e) {
+                res.sendStatus(500);
             }
         })
     }
@@ -353,6 +423,16 @@ export class App {
                 res.send(await new PartOfCityService().getAll());
             } catch (e) {
 
+            }
+        })
+
+        this.app.put(`/${this.partOfCityRouteName}`, async (req: Request, res: Response) => {
+            try {
+                await new PartOfCityService().update(req.body).then(() => {
+                    res.sendStatus(200);
+                })
+            } catch (e) {
+                res.sendStatus(500);
             }
         })
     }

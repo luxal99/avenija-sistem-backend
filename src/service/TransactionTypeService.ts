@@ -11,4 +11,8 @@ export class TransactionTypeService extends AbstractService<TransactionType> {
     async getAll(): Promise<TransactionType[]> {
         return await TransactionType.find();
     }
+
+    async update(entity: TransactionType): Promise<void> {
+        return Promise.resolve(undefined);
+    }
 }

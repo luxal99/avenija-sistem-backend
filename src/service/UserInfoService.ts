@@ -12,4 +12,8 @@ export class UserInfoService extends AbstractService<UserInfo> {
     async getAll(): Promise<UserInfo[]> {
         return Promise.resolve([]);
     }
+
+    async update(entity: UserInfo): Promise<void> {
+        return Promise.resolve(undefined);
+    }
 }
