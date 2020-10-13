@@ -160,6 +160,14 @@ export class App {
                 res.send(e);
             }
         })
+
+        this.app.get(`/${this.advertisingRequestRouteName}`,async (req:Request,res:Response)=>{
+            try{
+                res.send(await new AdvertisingRequestService().getAll())
+            }catch (e){
+                res.send(e)
+            }
+        })
     }
 
     protected cityRoute() {

@@ -9,7 +9,12 @@ export class AdvertisingRequestService extends AbstractService<AdvertisingReques
     }
 
     async getAll(): Promise<AdvertisingRequest[]> {
-        return Promise.resolve([]);
+        return await AdvertisingRequest.find({
+            relations: [
+                'id_location', 'id_estate_sub_category',
+                'id_transaction_type', 'id_user_info'
+            ]
+        })
     }
 
     async update(entity: AdvertisingRequest): Promise<void> {
