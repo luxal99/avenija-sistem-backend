@@ -11,7 +11,7 @@ export class CityService extends AbstractService<City> {
     }
 
     async getAll(): Promise<City[]> {
-        return await this.manager.find(City);
+        return await this.manager.find(City,{relations:['listOfPartOfCities']});
     }
 
     async update(entity: City): Promise<void> {

@@ -137,8 +137,10 @@ export class App {
 
     protected advertisingRequestRoute() {
         this.app.post(`/${this.advertisingRequestRouteName}`, async (req: Request, res: Response) => {
+            console.log(req.body)
             try {
                 let advertisingRequest = new AdvertisingRequest();
+
 
                 advertisingRequest.priceFrom = req.body.priceFrom;
                 advertisingRequest.priceTo = req.body.priceTo;
@@ -146,12 +148,13 @@ export class App {
                 advertisingRequest.quadrature = req.body.quadrature;
 
                 advertisingRequest.id_estate_sub_category = req.body.id_estate_sub_category;
-
+                advertisingRequest.id_transaction_type = req.body.id_transaction_type;
+                advertisingRequest.id_user_info = await new UserInfoService().save(new UserInfo(req.body.id_user_info.full_name,req.body.id_user_info.email,req.body.id_user_info.telephone));
                 advertisingRequest.id_location = await new LocationService().save(new Location(req.body.id_location.address, req.body.id_location.id_part_of_city))
 
 
                 await new AdvertisingRequestService().save(advertisingRequest).then(() => {
-                    res.sendStatus(200)
+                    res.send({status:200})
                 })
             } catch (e) {
                 res.send(e);

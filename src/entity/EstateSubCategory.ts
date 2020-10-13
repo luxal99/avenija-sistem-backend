@@ -16,7 +16,7 @@ export class EstateSubCategory extends BaseEntity {
     listOfEstates: Estate[]
 
     @OneToMany(type => AdvertisingRequest, listOfAdvertisingRequests => listOfAdvertisingRequests.id_estate_sub_category)
-    listOfAdvertisingRequests: Estate[]
+    listOfAdvertisingRequests: AdvertisingRequest[]
 
     @ManyToOne(type => EstateCategory, id => id.listOfEstateSubCategories)
     id_estate_category: EstateCategory
