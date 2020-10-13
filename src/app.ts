@@ -1,6 +1,4 @@
 import {Application, Request, Response} from "express";
-import express = require("express");
-import bodyParser = require("body-parser");
 import {AccessoriesService} from "./service/AccessoriesService";
 import {Accessories} from "./entity/Accessories";
 import {CityService} from "./service/CityService";
@@ -19,8 +17,6 @@ import {LocationService} from "./service/LocationService";
 import {Location} from "./entity/Location";
 import {PartOfCityService} from "./service/PartOfCityService";
 import {PartOfCity} from "./entity/PartOfCity";
-
-import bcrypt = require("bcrypt");
 import {UserService} from "./service/UserService";
 import {User} from "./entity/User";
 import {UserInfoService} from "./service/UserInfoService";
@@ -30,6 +26,12 @@ import {Estate} from "./entity/Estate";
 import {EstateService} from "./service/EstateService";
 import {ImageService} from "./service/ImageService";
 import {Image} from "./entity/Image";
+import {AdvertisingRequest} from "./entity/AdvertisingRequest";
+import {AdvertisingRequestService} from "./service/AdvertisingRequestService";
+import express = require("express");
+import bodyParser = require("body-parser");
+
+import bcrypt = require("bcrypt");
 
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
@@ -41,6 +43,7 @@ export class App {
     public app: Application;
 
     private accessoriesRouteName: string;
+    private advertisingRequestRouteName: string;
     private cityRouteName: string;
     private equipmentRouteName: string;
     private estateRouteName: string;
@@ -63,6 +66,7 @@ export class App {
         //    Routes
 
         this.accessoriesRoute();
+        this.advertisingRequestRoute();
         this.cityRoute();
         this.equipmentRoute();
         this.estateRoute();
@@ -84,6 +88,7 @@ export class App {
         this.app.use(bodyParser.json());
 
         this.accessoriesRouteName = "accessories";
+        this.advertisingRequestRouteName = "advertising"
         this.transactionTypeRouteName = "transaction"
         this.cityRouteName = "city"
         this.equipmentRouteName = "equipment";
@@ -126,6 +131,30 @@ export class App {
                 })
             } catch (e) {
                 res.sendStatus(500);
+            }
+        })
+    }
+
+    protected advertisingRequestRoute() {
+        this.app.post(`/${this.advertisingRequestRouteName}`, async (req: Request, res: Response) => {
+            try {
+                let advertisingRequest = new AdvertisingRequest();
+
+                advertisingRequest.priceFrom = req.body.priceFrom;
+                advertisingRequest.priceTo = req.body.priceTo;
+                advertisingRequest.description = req.body.description;
+                advertisingRequest.quadrature = req.body.quadrature;
+
+                advertisingRequest.id_estate_sub_category = req.body.id_estate_sub_category;
+
+                advertisingRequest.id_location = await new LocationService().save(new Location(req.body.id_location.address, req.body.id_location.id_part_of_city))
+
+
+                await new AdvertisingRequestService().save(advertisingRequest).then(() => {
+                    res.sendStatus(200)
+                })
+            } catch (e) {
+                res.send(e);
             }
         })
     }

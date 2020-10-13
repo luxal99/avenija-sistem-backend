@@ -1,6 +1,7 @@
 import {BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {EstateCategory} from "./EstateCategory";
 import {Estate} from "./Estate";
+import {AdvertisingRequest} from "./AdvertisingRequest";
 
 @Entity()
 export class EstateSubCategory extends BaseEntity {
@@ -13,6 +14,9 @@ export class EstateSubCategory extends BaseEntity {
 
     @OneToMany(type => Estate, listOfEstates => listOfEstates.id_estate_sub_category)
     listOfEstates: Estate[]
+
+    @OneToMany(type => AdvertisingRequest, listOfAdvertisingRequests => listOfAdvertisingRequests.id_estate_sub_category)
+    listOfAdvertisingRequests: Estate[]
 
     @ManyToOne(type => EstateCategory, id => id.listOfEstateSubCategories)
     id_estate_category: EstateCategory
