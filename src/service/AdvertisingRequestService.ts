@@ -1,5 +1,6 @@
 import {AbstractService} from "./AbstractService";
 import {AdvertisingRequest} from "../entity/AdvertisingRequest";
+import {getConnection} from "typeorm";
 
 export class AdvertisingRequestService extends AbstractService<AdvertisingRequest> {
 
@@ -19,7 +20,9 @@ export class AdvertisingRequestService extends AbstractService<AdvertisingReques
     }
 
     async update(entity: AdvertisingRequest): Promise<void> {
-        return Promise.resolve(undefined);
+         await getConnection().createQueryBuilder().update(AdvertisingRequest).set({
+            isReviewed:true
+        }).where("id=:id",{id:entity.id}).execute()
     }
 
 }

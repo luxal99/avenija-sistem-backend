@@ -149,23 +149,33 @@ export class App {
 
                 advertisingRequest.id_estate_sub_category = req.body.id_estate_sub_category;
                 advertisingRequest.id_transaction_type = req.body.id_transaction_type;
-                advertisingRequest.id_user_info = await new UserInfoService().save(new UserInfo(req.body.id_user_info.full_name,req.body.id_user_info.email,req.body.id_user_info.telephone));
+                advertisingRequest.id_user_info = await new UserInfoService().save(new UserInfo(req.body.id_user_info.full_name, req.body.id_user_info.email, req.body.id_user_info.telephone));
                 advertisingRequest.id_location = await new LocationService().save(new Location(req.body.id_location.address, req.body.id_location.id_part_of_city))
 
 
                 await new AdvertisingRequestService().save(advertisingRequest).then(() => {
-                    res.send({status:200})
+                    res.send({status: 200})
                 })
             } catch (e) {
                 res.send(e);
             }
         })
 
-        this.app.get(`/${this.advertisingRequestRouteName}`,async (req:Request,res:Response)=>{
-            try{
+        this.app.get(`/${this.advertisingRequestRouteName}`, async (req: Request, res: Response) => {
+            try {
                 res.send(await new AdvertisingRequestService().getAll())
-            }catch (e){
+            } catch (e) {
                 res.send(e)
+            }
+        })
+
+        this.app.put(`/${this.advertisingRequestRouteName}`, async (req: Request, res: Response) => {
+            try {
+                await new AdvertisingRequestService().update(req.body).then(() => {
+                    res.sendStatus(200)
+                })
+            } catch (e) {
+
             }
         })
     }
