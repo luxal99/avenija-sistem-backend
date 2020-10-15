@@ -340,7 +340,7 @@ export class App {
             try {
                 res.send(await new EstateCategoryService().getAll())
             } catch (e) {
-                res.sendStatus(500)
+                res.sendStatus(e)
             }
         })
 
