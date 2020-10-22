@@ -133,6 +133,17 @@ export class App {
                 res.sendStatus(500);
             }
         })
+
+        this.app.delete(`/${this.accessoriesRouteName}/:id`, async (req: Request, res: Response) => {
+            try {
+                const accessories = await Accessories.findOne(req.params.id);
+                await new AccessoriesService().delete(accessories).then(() => {
+                    res.sendStatus(200)
+                })
+            } catch (e) {
+                res.sendStatus(500)
+            }
+        })
     }
 
     protected advertisingRequestRoute() {
@@ -208,6 +219,17 @@ export class App {
                 res.sendStatus(500);
             }
         })
+
+        this.app.delete(`/${this.cityRouteName}/:id`, async (req: Request, res: Response) => {
+            try {
+                const city = await City.findOne(req.params.id);
+                await new CityService().delete(city).then(() => {
+                    res.sendStatus(200)
+                })
+            } catch (e) {
+                res.sendStatus(500)
+            }
+        })
     }
 
     protected equipmentRoute() {
@@ -237,6 +259,17 @@ export class App {
                 })
             } catch (e) {
                 res.sendStatus(500);
+            }
+        })
+
+        this.app.delete(`/${this.equipmentRouteName}/:id`, async (req: Request, res: Response) => {
+            try {
+                const equipment = await Equipment.findOne(req.params.id);
+                await new EquipmentService().delete(equipment).then(() => {
+                    res.sendStatus(200)
+                })
+            } catch (e) {
+                res.sendStatus(500)
             }
         })
     }
@@ -353,6 +386,18 @@ export class App {
                 res.sendStatus(500);
             }
         })
+
+
+        this.app.delete(`/${this.estateCategoryRouteName}/:id`, async (req: Request, res: Response) => {
+            try {
+                const estateCategory = await EstateCategory.findOne(req.params.id);
+                await new EstateCategoryService().delete(estateCategory).then(() => {
+                    res.sendStatus(200)
+                })
+            } catch (e) {
+                res.sendStatus(500)
+            }
+        })
     }
 
     protected estateSubCategoryRoute() {
@@ -383,6 +428,17 @@ export class App {
                 res.sendStatus(500);
             }
         })
+
+        this.app.delete(`/${this.estateSubCategoryRouteName}/:id`, async (req: Request, res: Response) => {
+            try {
+                const estateSubCategory = await EstateSubCategory.findOne(req.params.id);
+                await new EstateSubCategoryService().delete(estateSubCategory).then(() => {
+                    res.sendStatus(200)
+                })
+            } catch (e) {
+                res.sendStatus(500)
+            }
+        })
     }
 
     protected estateTypeRoute() {
@@ -390,6 +446,17 @@ export class App {
             try {
                 await new EstateTypeService().save(new EstateType(req.body.title)).then(() => {
                     res.send({status: 200})
+                })
+            } catch (e) {
+                res.sendStatus(500)
+            }
+        })
+
+        this.app.delete(`/${this.estateTypeRouteName}/:id`, async (req: Request, res: Response) => {
+            try {
+                const estateType = await EstateType.findOne(req.params.id);
+                await new EstateTypeService().delete(estateType).then(() => {
+                    res.sendStatus(200)
                 })
             } catch (e) {
                 res.sendStatus(500)
@@ -412,6 +479,8 @@ export class App {
                 res.sendStatus(500);
             }
         })
+
+
 
     }
 
@@ -444,6 +513,17 @@ export class App {
                 res.sendStatus(500);
             }
         })
+
+        this.app.delete(`/${this.heatingRouteName}/:id`, async (req: Request, res: Response) => {
+            try {
+                const heating = await Heating.findOne(req.params.id);
+                await new HeatingService().delete(heating).then(() => {
+                    res.sendStatus(200)
+                })
+            } catch (e) {
+                res.sendStatus(500)
+            }
+        })
     }
 
 
@@ -473,6 +553,17 @@ export class App {
                 res.send(await new PartOfCityService().getAll());
             } catch (e) {
 
+            }
+        })
+
+        this.app.delete(`/${this.partOfCityRouteName}/:id`, async (req: Request, res: Response) => {
+            try {
+                const partOfCity = await PartOfCity.findOne(req.params.id);
+                await new PartOfCityService().delete(partOfCity).then(() => {
+                    res.sendStatus(200)
+                })
+            } catch (e) {
+                res.sendStatus(500)
             }
         })
 
@@ -512,17 +603,17 @@ export class App {
         })
 
         this.app.post(`/${this.userRouteName}/auth`, async (req: Request, res: Response) => {
+                try {
 
-            try {
+                    const user = await new UserService().findByName(req.body.username);
+                    const auth = ((user != null && await bcrypt.compare(req.body.password, user.password))
+                        ? res.send({token: user.password, role: user.id_role}) : res.sendStatus(403))
 
-                const user = await new UserService().findByName(req.body.username);
-                const auth = ((user != null && await bcrypt.compare(req.body.password, user.password))
-                    ? res.send({token: user.password, role: user.id_role}) : res.sendStatus(403))
-
-            } catch {
-                res.sendStatus(500);
+                } catch {
+                    res.sendStatus(500);
+                }
             }
-        })
+        )
     }
 
 
