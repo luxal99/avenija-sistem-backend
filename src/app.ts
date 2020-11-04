@@ -481,7 +481,6 @@ export class App {
         })
 
 
-
     }
 
     protected heatingRoute() {
@@ -597,8 +596,8 @@ export class App {
                 let userInfo = await new UserInfoService().save(new UserInfo(req.body.id_user_info.full_name, req.body.id_user_info.email, req.body.id_user_info.telephone));
                 const userService = await new UserService().save(new User(req.body.username, await bcrypt.hash(req.body.password, 10), req.body.id_role, userInfo));
                 res.send({status: 200});
-            } catch {
-                res.sendStatus(500);
+            } catch (e) {
+                res.send({mess: e});
             }
         })
 
@@ -607,13 +606,42 @@ export class App {
 
                     const user = await new UserService().findByName(req.body.username);
                     const auth = ((user != null && await bcrypt.compare(req.body.password, user.password))
-                        ? res.send({token: user.password, role: user.id_role}) : res.sendStatus(403))
+                        ? res.send({token: await bcrypt.hash(user.username, 10), role: user.id_role}) : res.sendStatus(403))
 
                 } catch {
                     res.sendStatus(500);
                 }
             }
         )
+
+        this.app.put(`/${this.userRouteName}`, async (req: Request, res: Response) => {
+            try {
+
+                let listOfUsers: Array<User> = await new UserService().getAll();
+                let userByHash = new User();
+
+                for (const user of listOfUsers) {
+                    if (await bcrypt.compare(user.username, req.body.token)) {
+                        userByHash = user
+                    }
+                }
+
+
+                if (userByHash) {
+                    const userForUpdate = new User();
+                    userForUpdate.username = req.body.username;
+                    userForUpdate.password = await bcrypt.hash(req.body.password, 10);
+                    userForUpdate.id = userByHash.id;
+
+                    await new UserService().update(userForUpdate);
+                }
+
+                res.sendStatus(200)
+
+            } catch (e) {
+                res.sendStatus(500)
+            }
+        })
     }
 
 

@@ -1,5 +1,6 @@
 import {AbstractService} from "./AbstractService";
 import {User} from "../entity/User";
+import {getConnection} from "typeorm";
 
 export class UserService extends AbstractService<User> {
 
@@ -17,7 +18,11 @@ export class UserService extends AbstractService<User> {
     }
 
     async update(entity: User): Promise<void> {
-        return Promise.resolve(undefined);
+        await getConnection().createQueryBuilder().update(User).set({
+            username:entity.username,
+            password:entity.password
+        })
+            .where("id=:id",{id:entity.id}).execute()
     }
 
 }
