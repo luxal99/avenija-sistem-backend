@@ -32,6 +32,7 @@ import express = require("express");
 import bodyParser = require("body-parser");
 
 import bcrypt = require("bcrypt");
+import {watch} from "fs";
 
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
@@ -140,6 +141,14 @@ export class App {
                 await new AccessoriesService().delete(accessories).then(() => {
                     res.sendStatus(200)
                 })
+            } catch (e) {
+                res.sendStatus(500)
+            }
+        })
+
+        this.app.post(`/${this.userRouteName}/hash`, async (req: Request, res: Response) => {
+            try {
+                res.send({username:await new UserService().findByHashedUsername(req.body.token)})
             } catch (e) {
                 res.sendStatus(500)
             }
