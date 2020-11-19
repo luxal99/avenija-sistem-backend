@@ -9,7 +9,7 @@ export class Location extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({nullable:true})
     address: string;
 
     @ManyToOne(type => PartOfCity,id=>id.listOfLocations)
