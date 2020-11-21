@@ -313,7 +313,6 @@ export class App {
                 estate.listOfAccessories = req.body.listOfAccessories
             }
 
-            console.log(estate)
             await new EstateService().save(estate).then(() => {
                 listOfImages.forEach(async image => {
                     await new ImageService().save(new Image(image.title, image.url, estate)).then(() => {
