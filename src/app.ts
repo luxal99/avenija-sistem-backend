@@ -309,9 +309,10 @@ export class App {
                 estate.id_heating = req.body.id_heating;
             } else if (req.body.id_equipment !== '') {
                 estate.id_equipment = req.body.id_equipment;
-            } else if (req.body.listOfAccessories.length > 0) {
-                estate.listOfAccessories = req.body.listOfAccessories
             }
+
+            estate.listOfAccessories = req.body.listOfAccessories
+
 
             await new EstateService().save(estate).then(() => {
                 listOfImages.forEach(async image => {
