@@ -157,7 +157,6 @@ export class App {
 
     protected advertisingRequestRoute() {
         this.app.post(`/${this.advertisingRequestRouteName}`, async (req: Request, res: Response) => {
-            console.log(req.body)
             try {
                 let advertisingRequest = new AdvertisingRequest();
 
@@ -284,6 +283,7 @@ export class App {
     }
 
     protected estateRoute() {
+
         this.app.post(`/${this.estateRouteName}`, async (req: Request, res: Response) => {
 
             let estate = new Estate();
@@ -341,6 +341,22 @@ export class App {
             }
         })
 
+        this.app.get(`/${this.estateRouteName}/favorites`, async (req: Request, res: Response) => {
+            try {
+                res.send(await new EstateService().getAllFavoritesEstate())
+            } catch (e) {
+                res.send(500)
+            }
+        })
+
+        this.app.get(`/${this.estateRouteName}/promoted`, async (req: Request, res: Response) => {
+            try {
+                res.send(await new EstateService().getAllPromotedEstates())
+            } catch (e) {
+                res.send(500)
+            }
+        })
+
         this.app.get(`/${this.estateRouteName}/:id`, async (req: Request, res: Response) => {
             try {
                 res.send(await new EstateService().findById(Number.parseInt(req.params.id)))
@@ -350,7 +366,6 @@ export class App {
         })
 
         this.app.delete(`/${this.estateRouteName}/:id`, async (req: Request, res: Response) => {
-            console.log(req.body)
             try {
                 const estateService = new EstateService();
                 const locationService = new LocationService();
@@ -369,6 +384,7 @@ export class App {
                 res.sendStatus(500)
             }
         })
+
 
 
     }

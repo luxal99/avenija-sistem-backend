@@ -33,29 +33,34 @@ export class Estate extends BaseEntity {
     description: string
 
 
-    @Column({default:0})
+    @Column({default: 0})
     price: number;
 
 
-    @Column({default:0})
+    @Column({default: 0})
     quadrature: number
 
 
-    @Column({default:0})
+    @Column({default: 0})
     num_of_bathrooms: number
 
 
-    @Column({default:0})
+    @Column({default: 0})
     floor: number
 
 
-    @Column({default:0})
+    @Column({default: 0})
     max_floor: number;
 
 
-    @Column({default:0})
+    @Column({default: 0})
     rooms: number;
 
+    @Column({default: false})
+    isFavorite: boolean;
+
+    @Column({default: false})
+    isPromoted: boolean;
 
     @Column()
     parking: boolean

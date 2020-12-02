@@ -24,6 +24,31 @@ export class EstateService extends AbstractService<Estate> {
         await super.delete(entity);
     }
 
+    async getAllFavoritesEstate() {
+        let listOfEstates: Array<Estate> = await this.getAll();
+        let filtered = listOfEstates.filter(x => x.isFavorite === true)
+
+        return filtered.map(item =>({
+            id:item.id,
+            title:item.title,
+            price:item.price,
+            coverImage:item.listOfImages[0].url
+        }))
+
+    }
+    async getAllPromotedEstates() {
+        let listOfEstates: Array<Estate> = await this.getAll();
+        let filtered = listOfEstates.filter(x => x.isPromoted === true)
+
+        return filtered.map(item =>({
+            id:item.id,
+            title:item.title,
+            price:item.price,
+            description:item.description,
+            coverImage:item.listOfImages[0].url
+        }))
+
+    }
     async update(entity: Estate): Promise<void> {
         try {
 
@@ -49,6 +74,8 @@ export class EstateService extends AbstractService<Estate> {
                                 description: entity.description,
                                 id_equipment: entity.id_equipment,
                                 id_heating: entity.id_heating,
+                                isFavorite: entity.isFavorite,
+                                isPromoted: entity.isPromoted,
                                 id_transaction_type: entity.id_transaction_type,
                                 id_estate_sub_category: entity.id_estate_sub_category,
                                 id_estate_type: entity.id_estate_type
@@ -72,7 +99,7 @@ export class EstateService extends AbstractService<Estate> {
     }
 
     async getAll(): Promise<Estate[]> {
-         let arr =await Estate.find({
+        let arr = await Estate.find({
             relations: [
                 'listOfImages', 'id_estate_sub_category', 'id_estate_sub_category.id_estate_category', 'id_transaction_type',
                 'id_heating', 'id_estate_type', 'id_equipment', 'id_location',
@@ -81,6 +108,6 @@ export class EstateService extends AbstractService<Estate> {
         });
 
 
-         return arr.reverse()
+        return arr.reverse()
     }
 }
