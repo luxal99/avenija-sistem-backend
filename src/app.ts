@@ -328,7 +328,7 @@ export class App {
             try {
                 res.send(await new EstateService().getAll())
             } catch (e) {
-
+                res.sendStatus(500)
             }
         })
 
@@ -337,23 +337,24 @@ export class App {
                 await new EstateService().update(req.body);
                 res.sendStatus(200);
             } catch (e) {
-                res.send(500)
+                res.sendStatus(500)
             }
         })
 
         this.app.get(`/${this.estateRouteName}/favorites`, async (req: Request, res: Response) => {
-            try {
-                res.send(await new EstateService().getAllFavoritesEstate())
-            } catch (e) {
-                res.send(500)
-            }
+                try{
+                    res.send(await new EstateService().getAllFavoritesEstate())
+                }catch (e){
+                    res.sendStatus(500)
+                }
+
         })
 
         this.app.get(`/${this.estateRouteName}/promoted`, async (req: Request, res: Response) => {
             try {
                 res.send(await new EstateService().getAllPromotedEstates())
             } catch (e) {
-                res.send(500)
+                res.sendStatus(500)
             }
         })
 

@@ -26,7 +26,8 @@ export class EstateService extends AbstractService<Estate> {
 
     async getAllFavoritesEstate() {
         let listOfEstates: Array<Estate> = await this.getAll();
-        let filtered = listOfEstates.filter(x => x.isFavorite === true)
+        let filtered = listOfEstates.filter(x => x.isFavorite)
+
 
         return filtered.map(item =>({
             id:item.id,
@@ -92,7 +93,6 @@ export class EstateService extends AbstractService<Estate> {
                         })
                 })
         } catch (e) {
-            console.log(e)
         }
 
 

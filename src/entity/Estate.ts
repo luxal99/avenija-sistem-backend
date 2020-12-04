@@ -62,6 +62,9 @@ export class Estate extends BaseEntity {
     @Column({default: false})
     isPromoted: boolean;
 
+    @Column({nullable: false})
+    coverImage: string;
+
     @Column()
     parking: boolean
 
