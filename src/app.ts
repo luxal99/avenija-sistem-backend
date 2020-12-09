@@ -286,42 +286,44 @@ export class App {
 
         this.app.post(`/${this.estateRouteName}`, async (req: Request, res: Response) => {
 
-            let estate = new Estate();
-            estate.title = req.body.title
-            estate.description = req.body.description;
-            estate.price = req.body.price;
-            estate.quadrature = req.body.quadrature;
+
+                let estate = new Estate();
+                estate.title = req.body.title
+                estate.description = req.body.description;
+                estate.price = req.body.price;
+                estate.quadrature = req.body.quadrature;
 
 
-            estate.num_of_bathrooms = req.body.num_of_bathrooms;
-            estate.floor = req.body.floor;
-            estate.max_floor = req.body.max_floor;
-            estate.rooms = req.body.rooms;
-            estate.parking = req.body.parking;
-            estate.id_estate_sub_category = req.body.id_estate_sub_category;
-            estate.id_transaction_type = req.body.id_transaction_type;
-            estate.id_estate_type = req.body.id_estate_type;
-            estate.id_location = req.body.id_location;
+                estate.num_of_bathrooms = req.body.num_of_bathrooms;
+                estate.floor = req.body.floor;
+                estate.max_floor = req.body.max_floor;
+                estate.rooms = req.body.rooms;
+                estate.parking = req.body.parking;
+                estate.id_estate_sub_category = req.body.id_estate_sub_category;
+                estate.id_transaction_type = req.body.id_transaction_type;
+                estate.id_estate_type = req.body.id_estate_type;
+                estate.id_location = req.body.id_location;
 
-            let listOfImages: Image[] = req.body.listOfImages
+                let listOfImages: Image[] = req.body.listOfImages
 
-            if (req.body.id_heating !== '') {
-                estate.id_heating = req.body.id_heating;
-            } else if (req.body.id_equipment !== '') {
-                estate.id_equipment = req.body.id_equipment;
-            }
+                if (req.body.id_heating !== '') {
+                    estate.id_heating = req.body.id_heating;
+                } else if (req.body.id_equipment !== '') {
+                    estate.id_equipment = req.body.id_equipment;
+                }
 
-            estate.listOfAccessories = req.body.listOfAccessories
+                estate.listOfAccessories = req.body.listOfAccessories
 
 
-            await new EstateService().save(estate).then(() => {
-                listOfImages.forEach(async image => {
-                    await new ImageService().save(new Image(image.title, image.url, estate)).then(() => {
+                await new EstateService().save(estate).then(() => {
+                    listOfImages.forEach(async image => {
+                        await new ImageService().save(new Image(image.title, image.url, estate)).then(() => {
 
+                        })
                     })
-                })
-                res.send({status: 200})
-            });
+                    res.send({status: 200})
+                });
+
         })
 
         this.app.get(`/${this.estateRouteName}`, async (req: Request, res: Response) => {
