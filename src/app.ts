@@ -317,13 +317,8 @@ export class App {
             estate.listOfAccessories = req.body.listOfAccessories
 
 
-            await new EstateService().save(estate).then(() => {
-                listOfImages.forEach(async image => {
-                    await new ImageService().save(new Image(image.title, image.url, estate)).then(() => {
-
-                    })
-                })
-                res.send({status: 200})
+            await new EstateService().save(estate).then((realEstate) => {
+                res.send(realEstate)
             });
 
         })
@@ -563,18 +558,33 @@ export class App {
 
     protected imageRoute() {
         this.app.post(`/${this.imageRouteName}`, async (req: Request, res: Response) => {
-            const uploadFile = req.files.file;
-            const uploadPath = '/home/luxal/' + uploadFile.name;
+            try {
+                const uploadFile = req.files.file;
+                const uploadPath = '/home/luxal/' + uploadFile.name;
 
-            uploadFile.mv(uploadPath, (err) => {
-                if (err) {
-                    res.status(500).send(err)
-                }
-            })
+                
+                uploadFile.mv(uploadPath, (err) => {
+                    if (err) {
+                        res.status(500).send(err)
+                    }
+                })
 
-            new ImageService().save(new Image(uploadFile.name, uploadPath, req.body.idEstate)).then(() => {
-                res.sendStatus(200);
-            });
+                new ImageService().save(new Image(uploadFile.name, uploadPath, req.body.idEstate)).then((resp) => {
+                    res.send(resp);
+                });
+            } catch (e) {
+                res.status(500).send({e})
+            }
+        })
+
+        this.app.get(`/${this.imageRouteName}`, async (req: Request, res: Response) => {
+            try {
+                await new ImageService().getAll().then((images) => {
+                    res.send(images);
+                })
+            } catch (e) {
+                res.status(500).send({e})
+            }
         })
     }
 
