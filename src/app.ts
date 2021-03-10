@@ -33,6 +33,7 @@ import bodyParser = require("body-parser");
 
 import bcrypt = require("bcrypt");
 import {watch} from "fs";
+import {PROXY_URL, URL} from "./const/Const";
 
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
@@ -560,16 +561,16 @@ export class App {
         this.app.post(`/${this.imageRouteName}`, async (req: Request, res: Response) => {
             try {
                 const uploadFile = req.files.file;
-                const uploadPath = '/home/luxal/' + uploadFile.name;
+                const uploadPath = URL + uploadFile.name;
 
-                
+
                 uploadFile.mv(uploadPath, (err) => {
                     if (err) {
                         res.status(500).send(err)
                     }
                 })
 
-                new ImageService().save(new Image(uploadFile.name, uploadPath, req.body.idEstate)).then((resp) => {
+                new ImageService().save(new Image(uploadFile.name, PROXY_URL + uploadFile.name, req.body.idEstate)).then((resp) => {
                     res.send(resp);
                 });
             } catch (e) {
