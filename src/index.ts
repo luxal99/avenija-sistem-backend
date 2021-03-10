@@ -26,7 +26,7 @@ createConnection({
         "host": "localhost",
         "port": 3306,
         "username": "root",
-        "password": "Luxal.99",
+        "password": "password",
         "database": "sistem_nekretnine",
         "synchronize": true,
         "logging": false,
